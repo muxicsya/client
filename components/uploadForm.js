@@ -4,8 +4,7 @@ Vue.component('upload-form', {
       title: '',
       artist: '',
       image: '',
-      imageUrl: ''
-
+      imageUrl: '' 
     }
   },
   methods: {
