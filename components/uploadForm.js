@@ -3,20 +3,17 @@ Vue.component('upload-form', {
     return {
       title: '',
       artist: '',
-      image: '',
-      imageUrl: '' 
+      music: '',
     }
   },
   methods: {
     handleFileUpload() {
-      this.image = this.$refs.file.files[0];
-      console.log(this.image)
-      this.imageUrl = URL.createObjectURL(this.$refs.file.files[0]);
+      this.music = this.$refs.file.files[0];
     },
 
     upload() {
       let data = new FormData()
-      data.append('image', this.image)
+      data.append('music', this.music)
       data.append('title', this.title)
       data.append('artist', this.artist)
       axios({
@@ -29,6 +26,8 @@ Vue.component('upload-form', {
         }
       })
       .then(({ data }) => {
+        this.title = ''
+        this.artist = ''
         this.$emit('create-music', data)
       })
       .catch(err => {
@@ -49,9 +48,6 @@ Vue.component('upload-form', {
     <div class="form-group">
         <label for="exampleInputFile">File input</label>
         <input type="file" @change="handleFileUpload" class="mt-3" id="file" ref="file"></input>
-    </div>
-    <div>
-      <img :src="imageUrl">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

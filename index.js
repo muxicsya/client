@@ -9,7 +9,8 @@ var app = new Vue({
     allMusic: [],
     currentMusic: '',
     currentLyric: '',
-    searchResult: []
+    searchResult: [],
+    song: {},
   },
   methods: {
     addUser(user){
@@ -24,18 +25,17 @@ var app = new Vue({
     },
     pushMusic(data) {
       this.allMusic.unshift(data)
-      this.currentMusic = this.allMusic[0]
-      this.getLyric(this.currentMusic.artist, this.currentMusic.title)
     },
     showForm(){
       this.showForm = true
     },
     getLyric(artist, title) {
-      console.log(artist, title)
       axios({
         method: "POST",
         url: `${url}/lyric/`,
-        headers: { token: localStorage.getItem('token') },
+        headers: {
+           token: localStorage.getItem('token') 
+        },
         data: {
           artist: artist,
           title: title
@@ -43,14 +43,29 @@ var app = new Vue({
       })
         .then(({ data }) => {
           this.currentLyric = data.lyric;
-          console.log(this.currentLyric);
+          // console.log(this.currentLyric);
         })
         .catch((err) => {
+          if (err.response.status == 404) {
+            alertify.error('Sorry lyrics not found')
+          }
           console.log(err.response);
         });
+    },
+    getAllSong () {
+      axios({
+        method: 'get',
+        url: `${url}/musics`
+      })
+      .then( ({ data }) => {
+        this.allMusic = data
+      })
+      .catch(err => {
+        console.error(err.response)
+      })
     }
   },
   created() {
-
+    this.getAllSong()
   }
 })
