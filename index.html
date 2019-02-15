@@ -39,7 +39,7 @@
     <div id="app" >
 
         <!-- NAVBAR -->
-        <navbar @search-title="search" @logout="logout" @upload="state = 'uploadForm'" @change-state="state = 'loginform'" :user="user"></navbar>
+        <navbar @all-song="getAllSong" @search-title="search" @logout="logout" @upload="state = 'uploadForm'" @change-state="state = 'loginform'" :user="user"></navbar>
         
         <div id="main" class=" mx-3 mt-3 row justify-content-around">
 
@@ -56,7 +56,7 @@
             <div class="col-4 mt-5">
 
                 <!--UPLOAD FORM -->
-                <upload-form v-if="state == 'uploadForm'" @create-music="pushMusic"></upload-form>
+                <upload-form @close-upload="state = ''" v-if="state == 'uploadForm'" @create-music="pushMusic"></upload-form>
 
                 <!-- LYRICS -->
                 <!-- <div style=""> -->
@@ -67,7 +67,6 @@
                 <!-- LOGIN FORM -->
                 <login @change-state="addUser" v-if="state=='loginform'"></login>
 
-                <!-- LOGIN FORM -->
 
             </div>
 

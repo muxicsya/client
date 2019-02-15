@@ -50,6 +50,7 @@ Vue.component('upload-form', {
         <input type="file" @change="handleFileUpload" class="mt-3" id="file" ref="file"></input>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-secondary" @click.prevent="$emit('close-upload')">Close</button>
   </form>
   `
 })

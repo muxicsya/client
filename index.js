@@ -23,8 +23,15 @@ var app = new Vue({
       this.state = state
     },
     search(title){
-      this.searchResult = this.allMusic.filter(song => song.title == title)
-      console.log(this.searchResult)
+      let q = new RegExp(title.toLowerCase())
+        
+      if (title) {
+          this.allMusic = this.allMusic.filter(function (el) {
+              return el.title.toLowerCase().match(q) || el.artist.toLowerCase().match(q)
+          })
+      } else {
+          this.getAllSong()
+      }
     },
     pushMusic(data) {
       this.allMusic.unshift(data)

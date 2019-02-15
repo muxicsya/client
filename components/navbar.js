@@ -17,7 +17,7 @@ Vue.component('navbar', {
   <nav class="navbar navbar-dark text-dark border-bottom shadow" id="navbar">
 
     <a href="#" class="navbar-brand ml-2 border-right pr-4" style="color: black">
-      <h2 class="font-weight-bold"> Muxicsya</h2>
+      <h2 class="font-weight-bold" @click.prevent="$emit('all-song')"> Muxicsya</h2>
     </a>
 
     <div class="row "> 
@@ -26,7 +26,7 @@ Vue.component('navbar', {
         <input class="form-control" type="search" placeholder="Search" aria-label="Search" v-model="title">
         <button class="btn my-2 my-sm-0" type="submit" @click.prevent="emitTitle"><i class="fas fa-search"></i></button>
       </form>
-      
+
       <div class="nav-item">
         <button class="h5 btn btn-dark mt-2" @click.prevent="$emit('upload')">+Upload</button>
       </div>
