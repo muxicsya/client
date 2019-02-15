@@ -7,29 +7,35 @@ var app = new Vue({
     user: null,
     show: "",
     allMusic: [],
-    currentMusic: '',
+    currentMusic: {},
     currentLyric: '',
     searchResult: [],
     song: {},
+
   },
   methods: {
     addUser(user){
+      console.log(user, '------------')
       this.user = user
+      this.state = ''
     },
     changeState(state){
       this.state = state
     },
     search(title){
-      this.searchResult = this.allMusic.filter(song => song.title = title)
+      this.searchResult = this.allMusic.filter(song => song.title == title)
       console.log(this.searchResult)
     },
     pushMusic(data) {
       this.allMusic.unshift(data)
+      this.currentMusic = data
+      this.state = 'lyric'
+      this.getLyric()
     },
     showForm(){
       this.showForm = true
     },
-    getLyric(artist, title) {
+    getLyric() {
       axios({
         method: "POST",
         url: `${url}/lyric/`,
@@ -37,13 +43,12 @@ var app = new Vue({
            token: localStorage.getItem('token') 
         },
         data: {
-          artist: artist,
-          title: title
+          artist: this.currentMusic.artist,
+          title: this.currentMusic.title
         }
       })
         .then(({ data }) => {
-          this.currentLyric = data.lyric;
-          // console.log(this.currentLyric);
+          this.currentLyric = data.lyric
         })
         .catch((err) => {
           if (err.response.status == 404) {
@@ -51,6 +56,16 @@ var app = new Vue({
           }
           console.log(err.response);
         });
+    },
+    displayLyric (song) {
+      this.currentLyric = ''
+      this.currentMusic = song
+
+      setTimeout( () => {
+        this.getLyric()
+      }, 500)
+
+      this.state = 'lyric'
     },
     getAllSong () {
       axios({
@@ -63,9 +78,34 @@ var app = new Vue({
       .catch(err => {
         console.error(err.response)
       })
+    },
+    logout () {
+      this.user= null
+      localStorage.removeItem('token')
+    },
+    getUser () {
+      axios({
+        method: 'get',
+        url: `${url}/users`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+      .then( ({ data }) => {
+        console.log(data, '-----')
+        this.user = data
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
     }
   },
   created() {
     this.getAllSong()
+    if (localStorage.token) {
+      this.getUser()
+    } else {
+
+    }
   }
 })

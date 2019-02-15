@@ -14,15 +14,23 @@ Vue.component('login', {
       }
 
       axios
-        .post(`http://localhost:3000/register`, body)
+        .post(`${url}/register`, body)
         .then(response => {
           console.log(response.data)
           this.$emit('change-state', response.data.data)
+          this.error = ''
           localStorage.setItem('token', response.data.token )
         })
         .catch(err => {
           console.log(err.response)
-          this.error = err.response.data.msg
+          if(err.response.data.err.errors.password){
+            this.error = err.response.data.err.errors.password.message
+          } else if(err.response.data.err.errors.email){
+            this.error = err.response.data.err.errors.email.message
+          } else{
+            console.log(err.response)
+            this.error = err.response.data.msg
+          }
         })
     },
     signin(){
@@ -32,14 +40,17 @@ Vue.component('login', {
       }
 
       axios
-        .post(`http://localhost:3000/login`, body)
+        .post(`${url}/login`, body)
         .then(response => {
+          this.error = ''
           console.log(response.data)
           this.$emit('change-state', response.data.data)
           localStorage.setItem('token', response.data.token )
         })
         .catch(err => {
-          this.error = err.response.data.msg
+          console.log(err.response)
+            this.error = err.response.data.msg
+        
         })
     }
   },

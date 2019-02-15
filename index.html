@@ -36,26 +36,33 @@
 
 <body>
 
-    <div id="app" class="mx-5 mt-3">
-        <!-- NAVBAR -->
-        <navbar @search-title="search" @change-state="state = 'loginform'" :user="user"></navbar>
+    <div id="app" >
 
-        <div id="main" class="row justify-content-around">
+        <!-- NAVBAR -->
+        <navbar @search-title="search" @logout="logout" @upload="state = 'uploadForm'" @change-state="state = 'loginform'" :user="user"></navbar>
+        
+        <div id="main" class=" mx-3 mt-3 row justify-content-around">
 
             <!-- SONG LIST -->
-            <div class="col-8 card-columns">
-              <song-card @current-song="getLyric(song.artist, song.title) " v-for="song in allMusic" :key="song._id" :song="song"></song-card>
+            <div class="col-8" >
+
+                <div class="row">
+                    <song-card @current-song="displayLyric " v-for="song in allMusic" :key="song._id" :song="song"></song-card>
+                </div>
 
             </div>
 
             <!-- SIDEBAR -->
-            <div class="col-4">
+            <div class="col-4 mt-5">
 
                 <!--UPLOAD FORM -->
-                <upload-form @create-music="pushMusic"></upload-form>
-                
+                <upload-form v-if="state == 'uploadForm'" @create-music="pushMusic"></upload-form>
+
                 <!-- LYRICS -->
-                <get-lyric :current-music="currentMusic" :current-lyric="currentLyric"></get-lyric>
+                <!-- <div style=""> -->
+
+                    <get-lyric v-if="state == 'lyric'" :current-music="currentMusic" :current-lyric="currentLyric"></get-lyric>
+                <!-- </div> -->
 
                 <!-- LOGIN FORM -->
                 <login @change-state="addUser" v-if="state=='loginform'"></login>
