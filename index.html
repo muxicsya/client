@@ -39,6 +39,23 @@
             <!-- SONG LIST -->
             <div class="col">
 
+                <div class="card bg-dark text-white card-song">
+                    <img class="image" class="card-img" src="https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg" alt="Card image">
+                    <div class=" middle">
+                        <h5 class=" text">Card title</h5>
+                        <p class="text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+
+                <div class="card mt-3" style="width: 18rem; border-radius: 20%">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Song title</h5>
+                        <img class="image" class="card-img" src="https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg" alt="Card image">
+                        <!-- SHARE FACEBOOK -->
+                        <button class="btn btn-secondary mt-2 float-right" style="background-color: #efefef; border-radius: 100%"><a href="http://www.facebook.com/sharer.php?u="><i class="fab fa-facebook-f"></i></a></button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- SIDEBAR -->
@@ -46,12 +63,14 @@
 
                 <!--UPLOAD FORM -->
                 <upload-form @create-music="pushMusic"></upload-form>
+                
                 <!-- LYRICS -->
-
                 <get-lyric :current-music="currentMusic" :current-lyric="currentLyric"></get-lyric>
 
                 <!-- LOGIN FORM -->
                 <login @change-state="addUser" v-if="state=='loginform'"></login>
+
+                <!-- LOGIN FORM -->
 
             </div>
 
