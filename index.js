@@ -8,18 +8,20 @@ var app = new Vue({
     show: "",
     allMusic: [],
     currentMusic: '',
-    currentLyric: ''
+    currentLyric: '',
+    searchResult: []
   },
   methods: {
     addUser(user){
       this.user = user
     },
     changeState(state){
-      console.log(state)
       this.state = state
-    }
-  },
-  methods: {
+    },
+    search(title){
+      this.searchResult = this.allMusic.filter(song => song.title = title)
+      console.log(this.searchResult)
+    },
     pushMusic(data) {
       this.allMusic.unshift(data)
       this.currentMusic = this.allMusic[0]
