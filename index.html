@@ -33,7 +33,7 @@
 
     <div id="app">
         <!-- NAVBAR -->
-        <navbar></navbar>
+        <navbar @change-state="state = 'loginform'" :user="user"></navbar>
         <div id="main">
 
             <!-- SONG LIST -->
@@ -45,12 +45,13 @@
             <div class="col-5">
 
                 <!--UPLOAD FORM -->
-
+                <upload-form @create-music="pushMusic"></upload-form>
                 <!-- LYRICS -->
 
-                <!-- LOGIN FORM -->
-                <login @change-state="addState"></login>
+                <get-lyric :current-music="currentMusic" :current-lyric="currentLyric"></get-lyric>
 
+                <!-- LOGIN FORM -->
+                <login @change-state="addUser" v-if="state=='loginform'"></login>
 
             </div>
 
@@ -70,6 +71,8 @@
         crossorigin="anonymous"></script>
     <script src="components/navbar.js"></script>
     <script src="components/login.js"></script>
+    <script src="components/uploadForm.js"></script>
+    <script src="components/getLyrics.js"></script>
     <!-- INDEX / MAIN -->
     <script src="index.js"></script>
 </body>

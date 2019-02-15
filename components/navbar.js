@@ -4,6 +4,12 @@ Vue.component('navbar', {
       title: ""
     }
   },
+  props: ['user'],
+  methods: {
+    logout(){
+      localStorage.removeItem('token')
+    }
+  },
   template: (`
   <nav class="navbar navbar-dark text-dark border-bottom shadow" id="navbar">
 
@@ -22,7 +28,11 @@ Vue.component('navbar', {
     </div>
 
     <div class="nav-item">
-      <button class="h5 btn btn-light mt-2">Sign In</button>
+      <button class="h5 btn btn-light mt-2" v-if="!user" @click.prevent="$emit('change-state', 'loginform')">Sign In</button>
+    </div>
+
+    <div class="nav-item">
+      <button class="h5 btn btn-light mt-2" v-if="user">logout</button>
     </div>
 
   </nav>

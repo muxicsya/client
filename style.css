@@ -1,0 +1,11 @@
+.lyrics-header h3 {
+  font-size: 13px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.lyrics-header h6 {
+  line-height: 10px;
+  font-size: 8px;
+  color: black;
+}
