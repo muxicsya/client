@@ -8,6 +8,9 @@ Vue.component('navbar', {
   methods: {
     logout(){
       localStorage.removeItem('token')
+    },
+    emitTitle(){
+      this.$emit('search-title', this.title)
     }
   },
   template: (`
@@ -20,7 +23,7 @@ Vue.component('navbar', {
 
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control" type="search" placeholder="Search" aria-label="Search" v-model="title">
-      <button class="btn my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+      <button class="btn my-2 my-sm-0" type="submit" @click.prevent="emitTitle"><i class="fas fa-search"></i></button>
     </form>
 
     <div class="nav-item">
